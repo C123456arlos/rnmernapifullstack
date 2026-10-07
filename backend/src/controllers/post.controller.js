@@ -5,6 +5,7 @@ import { getAuth } from '@clerk/express'
 import cloudinary from '../config/cloudinary.js'
 import Notification from '../models/notification.model.js'
 import Comment from '../models/comment.model.js'
+import mongoose from 'mongoose'
 export const getPosts = asyncHandler(async (req, res) => {
     const posts = await Post.find()
         .sort({ createdAt: -1 }).populate('user', 'username firstName lastName profilePicture')
@@ -73,6 +74,7 @@ export const likePost = asyncHandler(async (req, res) => {
     const user = await User.findOne({ clerkId: userId })
     const post = await Post.findById(postId)
     if (!user || !post) return res.status(404).json({ error: 'user or post not found' })
+
     const isLiked = post.likes.includes(user._id)
     if (isLiked) {
         await Post.findByIdAndUpdate(postId, {
@@ -108,3 +110,4 @@ export const deletePost = asyncHandler(async (req, res) => {
     await Post.findByIdAndDelete(postId)
     res.status(200).json({message:'post deleted successfully'})
 })
+// 13:37

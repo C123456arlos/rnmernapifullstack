@@ -3,6 +3,7 @@ import dns from "node:dns/promises"
 import cors from 'cors'
 import userRoutes from './routes/user.route.js'
 import postRoutes from './routes/post.route.js'
+import commentRoutes from './routes/comment.route.js'
 import {clerkMiddleware} from '@clerk/express'
 import { ENV } from './config/env.js'
 import { connectDB } from './config/db.js'
@@ -14,6 +15,7 @@ app.use(clerkMiddleware())
 app.get('/', (req, res) => res.send('app'))
 app.use('/api/users', userRoutes)
 app.use('/api/posts', postRoutes)
+app.use('/api/comments', commentRoutes)
 app.use((err, req, res, next) => {
     console.error('unhandled error', err)
     res.status(500).json({error:err.message || 'internal server error'})

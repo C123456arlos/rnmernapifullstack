@@ -6,7 +6,7 @@ const HomeScreen = () => {
 const {signOut} = useClerk()
   return (
     <View>
-      <Text>HomeScreentest</Text>
+      <Text>HomeScreenx</Text>
       <Button onPress={()=>signOut()} title='logout'></Button>
     </View>
   )

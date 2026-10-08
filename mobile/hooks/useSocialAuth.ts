@@ -11,7 +11,7 @@ export const useSocialAuth = () => {
         try {
             const { createdSessionId, setActive } = await startSSOFlow({strategy} )
             if (createdSessionId && setActive) {
-                await setActive({session:createdSessionId})
+            await setActive({session:createdSessionId})
             }
         } catch (error) {
             console.log('error in social auth', error)

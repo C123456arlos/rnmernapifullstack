@@ -6,7 +6,7 @@ const router = express.Router()
 router.get('/', getPosts)
 router.get('/:postId', getPost)
 router.get('/user/:username', getUserPosts)
-router.post('/', protectRoute, upload.single('image'), createPost)
+router.post('/', upload.single('imageFile'), createPost)
 router.post('/:postId/like', protectRoute, likePost)
 router.delete('/:postId', protectRoute, deletePost)
 export default router

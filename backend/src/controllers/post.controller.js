@@ -40,12 +40,13 @@ export const createPost = asyncHandler(async (req, res) => {
     if (!content && !imageFile) {
         return res.status(400).json({error:'post must contain either text or image'})
     }
-    const user = await User.findOne({ clerkId: userId })
-    if (!user) return res.status(404).json({ error: 'user not found' })
+    // const user = await User.findOne({ clerkId: userId })
+    // if (!user) return res.status(404).json({ error: 'user not found' })
     let imageUrl = ''
     if (imageUrl) {
         try {
             const base64Image = `data:${imageFile.mimetype};base64,${imageFile.buffer.toString('base64')}`
+            
             const uploadResponse = await cloudinary.uploader.upload(base64Image, {
                 folder: 'posts',
                 resource_type: 'image',
@@ -62,7 +63,7 @@ export const createPost = asyncHandler(async (req, res) => {
         }
     }
     const post = await Post.create({
-        user: user._id,
+        // user: user._id,
         content: content || '',
         image:imageUrl
     })

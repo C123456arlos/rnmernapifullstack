@@ -5,6 +5,7 @@ import Post from '../models/post.model.js'
 import User from '../models/user.model.js'
 import Notification from '../models/notification.model.js'
 import { useReducer } from 'react'
+import mongoose from 'mongoose'
 export const getComments = asyncHandler(async (req, res) => {
     const { postId } = req.params
     const comments = await Comment.find({ post: postId })
@@ -21,28 +22,29 @@ export const createComment = asyncHandler(async (req, res) => {
     const user = await User.findOne({ clerkId: userId })
     const post = await Post.findById(postId)
     if (!user || !post) return res.status(404).json({ error: 'user or post not found' })
-    const session = await mongoose.startSession()
-    let comment
-    try {
-        await session.withTransaction(async () => {
-            comment = await Comment.create({
-                user: user._id,
-                post: postId,
-                content
-            }, { session })
-            await Post.findByIdAndUpdate(postId, {
-                $push: { comments: comment._id }
-            }, { session })
-        })
-    } finally {
-        await session.endSession()
-            }
-    // const comment = await Comment.create({
-    //     user: user._id, post: postId, content
-    // })
-    // await Post.findByIdAndUpdate(postId, {
-    //     $push:{comments:comment._id}
-    // })
+    // const session = await mongoose.startSession()
+    // let comment
+    // try {
+    //     await session.withTransaction(async () => {
+    //         comment = await Comment.create({
+    //             // user: user._id,
+    //             // post: postId,
+    //             content
+    //         }, { session })
+    //         await Post.findByIdAndUpdate(postId, {
+    //             $push: { comments: comment._id }
+    //         }, { session })
+    //     })
+    // } finally {
+    //     await session.endSession()
+            // }
+    const comment = await Comment.create({
+        user: user._id, post: postId,
+        content
+    })
+    await Post.findByIdAndUpdate(postId, {
+        $push:{comments:comment._id}
+    })
     if (post.user.toString() !== user._id.toString()) {
         await Notification.create({
             from: user._id,

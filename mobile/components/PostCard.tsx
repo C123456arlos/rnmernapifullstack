@@ -6,10 +6,11 @@ interface PostCardProps{
     post: Post
     onLike: (postId: string) => void
     onDelete: (postId: string) => void
+    onComment: (post: Post) => void
     isLiked?: boolean
     currentUser:User
 }
-const PostCard = ({ currentUser, onDelete, onLike, post, isLiked }: PostCardProps) => {
+const PostCard = ({ currentUser, onDelete, onLike, post, isLiked, onComment }: PostCardProps) => {
     const isOwnPost = post.user?._id === currentUser?._id
     const handleDelete = () => {
         Alert.alert('delete post', 'are you sure you want to delete this post', [
@@ -47,7 +48,7 @@ const PostCard = ({ currentUser, onDelete, onLike, post, isLiked }: PostCardProp
                   )}
                   <View className='flex-row justify-between mx-w-xs'>
                       <TouchableOpacity className='flex-row items-center'
-                          onPress={() => {}}>
+                          onPress={() =>onComment(post)}>
                           <Feather name='message-circle' size={18} color='#657786'></Feather>
                           <Text className='text-gray-500 text-sm ml-2'>
                               {formatNumber(post.comments?.length||0)}

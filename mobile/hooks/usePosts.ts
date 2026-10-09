@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useApiClient, postApi } from '../utils/api'
-import { Alert } from 'react-native'
 export const usePosts = () => {
     const api = useApiClient()
     const queryClient = useQueryClient()
@@ -12,9 +11,6 @@ export const usePosts = () => {
     const likePostMutation = useMutation({
         mutationFn: (postId: string) => postApi.likePost(api, postId),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] }),
-                onError: () => {
-                    Alert.alert('error', 'failed to create post please try again')
-                }
     })
     const deletePostMutation = useMutation({
         mutationFn: (postId: string) => postApi.deletePost(api, postId),

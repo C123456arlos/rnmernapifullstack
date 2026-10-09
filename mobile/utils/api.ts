@@ -5,12 +5,9 @@ export const createApiClient = (getToken: () => Promise<string | null>): AxiosIn
     const api = axios.create({ baseURL: API_BASE_URL })
     api.interceptors.request.use(async (config) => {
         const token = await getToken()
-        console.log(token)
         if (token) {
-            // config.headers.Authorization= `Bearer 1`
             config.headers.Authorization= `Bearer ${token}`
         }
-        console.log(config.headers.Authorization)
         return config
     })
     return api

@@ -10,7 +10,7 @@ import PostsList from '../../../components/PostsList'
 const HomeScreen = () => {
   useUserSync()
   return (
-    <SafeAreaView className='flex-1'>
+    <SafeAreaView className='flex-1 bg-white'>
       <View className='flex-row justify-between items-center px-4 py-3 border-b border-gray-100'>
         <Ionicons name='logo-twitter' size={24} color={'#1da1f2'}></Ionicons>
         <Text className='text-xl font-bold text-gray-900'>home</Text>

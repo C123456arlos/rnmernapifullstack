@@ -11,21 +11,21 @@ export const useCreatePost = () => {
     const createPostMutation = useMutation({
         mutationFn: async (postData: { content: string, imageUri?: string }) => {
             const formData = new FormData()
-            if(postData.content) formData.append('content', postData.content)
+            if (postData.content) formData.append('content', postData.content)
             if (postData.imageUri) {
                 const uriParts = postData.imageUri.split('.')
                 const fileType = uriParts[uriParts.length - 1].toLowerCase()
                 const mimeTypeMap: Record<string, string> = {
                     png: 'image/png',
                     gif: 'image/gif',
-                    webp:'image/webp'
+                    webp: 'image/webp'
                 }
                 const mimeType = mimeTypeMap[fileType] || 'image/jpeg'
-                formData.append('image', {
+               formData.append('imageFile', {
                     uri: postData.imageUri,
                     name: `image.${fileType}`,
                     type:mimeType
-                } as any)
+                } as any)   
             }
             return api.post('/posts', formData, {
                 headers:{'Content-Type':'multipart/form-data'}

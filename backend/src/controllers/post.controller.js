@@ -33,20 +33,53 @@ export const getUserPosts = asyncHandler(async (req, res) => {
         .populate({ path: 'comments', populate: { path: 'user', select: 'useername firstName lastName profilePicture' } })
     res.status(200).json({posts})
 })
+// export const createPost = asyncHandler(async (req, res) => {
+//     const { userId } = getAuth(req)
+//     const { content } = req.body
+//     let imageFile = req.file
+//     if (!content && !imageFile) {
+//         return res.status(400).json({error:'post must contain either text or image'})
+//     }
+//     const user = await User.findOne({ clerkId: userId })
+//     if (!user) return res.status(404).json({ error: 'user not found' })
+//     let imageUrl = ''
+//     if (imageUrl) {
+//         try {
+//             const base64Image = `data:${imageFile.mimetype};base64,${imageFile.buffer.toString('base64')}`
+//             const uploadResponse = await cloudinary.uploader.upload(base64Image, {
+//                 folder: 'posts',
+//                 resource_type: 'image',
+//                 transformation: [
+//                     { width: 800, height: 600, crop: 'limit' },
+//                     { quality: 'auto' },
+//                     {format:'auto'}
+//                 ]
+//             })
+//             imageUrl=uploadResponse.secure_url
+//         } catch (uploadError) {
+//             console.error('cloudinary upload error', uploadError)
+//             return res.status(400).json({error:'failed to upload image'})
+//         }
+//     }
+//     const post = await Post.create({
+//         user: user._id,
+//         content: content || '',
+//         image:imageUrl
+//     })
+//     res.status(201).json({post})
+// })
 export const createPost = asyncHandler(async (req, res) => {
     const { userId } = getAuth(req)
     const { content } = req.body
-    const imageFile = req.file
+    let imageFile = req.file
     if (!content && !imageFile) {
         return res.status(400).json({error:'post must contain either text or image'})
     }
-    // const user = await User.findOne({ clerkId: userId })
-    // if (!user) return res.status(404).json({ error: 'user not found' })
-    let imageUrl = ''
-    if (imageUrl) {
+    const user = await User.findOne({ clerkId: userId })
+    if (!user) return res.status(404).json({ error: 'user not found' })
+    if (imageFile) {
         try {
             const base64Image = `data:${imageFile.mimetype};base64,${imageFile.buffer.toString('base64')}`
-            
             const uploadResponse = await cloudinary.uploader.upload(base64Image, {
                 folder: 'posts',
                 resource_type: 'image',
@@ -56,16 +89,16 @@ export const createPost = asyncHandler(async (req, res) => {
                     {format:'auto'}
                 ]
             })
-            imageUrl=uploadResponse.secure_url
+            imageFile=uploadResponse.secure_url
         } catch (uploadError) {
             console.error('cloudinary upload error', uploadError)
             return res.status(400).json({error:'failed to upload image'})
         }
     }
     const post = await Post.create({
-        // user: user._id,
+        user: user._id,
         content: content || '',
-        image:imageUrl
+        image:imageFile
     })
     res.status(201).json({post})
 })

@@ -9,9 +9,12 @@ export const aj = arcjet({
         }),
         detectBot({
             mode: 'LIVE',
-            allow: [
-                'CATEGORY:SEARCH_ENGINE',
-                'UNKNOWN_BOT'
+            // allow: [
+            //     'CATEGORY:SEARCH_ENGINE',
+            //     'UNKNOWN_BOT'
+            // ]
+            deny: [
+                    'UNKNOWN_BOT'
             ]
         }),
         tokenBucket({

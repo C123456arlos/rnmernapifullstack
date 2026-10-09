@@ -10,17 +10,17 @@ export const arcjetMiddleware = async (req, res, next) => {
                     error: 'too many requests',
                     message: 'rate limit exceeded please try again later'
                 })
-                // }
-                // else if (decision.reason.isBot()) {
-                //     return res.status(403).json({
-                //         error: 'bot access denied',
-                //         message:'automated requests are not allowed'
-                //     })
-                // } else {
-                //     return res.status(403).json({
-                //         error: 'forbidden',
-                //         message:'access denied by security policy'
-                //     })                
+                }
+                else if (decision.reason.isBot()) {
+                    return res.status(403).json({
+                        error: 'bot access denied',
+                        message:'automated requests are not allowed'
+                    })
+                } else {
+                    return res.status(403).json({
+                        error: 'forbidden',
+                        message:'access denied by security policy'
+                    })                
             }
         }
         if (decision.results.some((result) => result.reason.isBot()

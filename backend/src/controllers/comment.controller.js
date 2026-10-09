@@ -21,6 +21,8 @@ export const createComment = asyncHandler(async (req, res) => {
     }
     const user = await User.findOne({ clerkId: userId })
     const post = await Post.findById(postId)
+    // const user = {_id:'6ac928abccdba7a7eecfbbb1'}
+    // const post = {_id:'6ac93cec4729272d7517bd7b', user:''}
     if (!user || !post) return res.status(404).json({ error: 'user or post not found' })
     // const session = await mongoose.startSession()
     // let comment

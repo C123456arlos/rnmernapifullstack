@@ -2,16 +2,17 @@ import { aj } from "../config/arcjet.js"
 export const arcjetMiddleware = async (req, res, next) => {
     try {
         const decision = await aj.protect(req, {
-            requested: 1000
+            requested: 1
         })
         if (decision.isDenied()) {
-            if (decision.reason.isRateLimit()) {
-                return res.status(429).json({
-                    error: 'too many requests',
-                    message: 'rate limit exceeded please try again later'
-                })
-                }
-                else if (decision.reason.isBot()) {
+            // if (decision.reason.isRateLimit()) {
+            //     return res.status(429).json({
+            //         error: 'too many requests',
+            //         message: 'rate limit exceeded please try again later'
+            //     })
+            //     }
+            // else
+                if (decision.reason.isBot()) {
                     return res.status(403).json({
                         error: 'bot access denied',
                         message:'automated requests are not allowed'

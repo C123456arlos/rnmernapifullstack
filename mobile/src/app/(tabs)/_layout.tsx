@@ -5,7 +5,8 @@ import { Feather } from '@expo/vector-icons'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useAuth } from '@clerk/clerk-expo'
 const TabsLayout = () => {
-    const insets = useSafeAreaInsets()
+  const insets = useSafeAreaInsets()
+  
     const { isSignedIn } = useAuth()
     if(!isSignedIn) return <Redirect href={'/(auth)'}></Redirect>
   return (

@@ -15,7 +15,7 @@ export default function RootLayout() {
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <QueryClientProvider client={queryClient}>
       <Stack screenOptions={{headerShown:false}}>
-        <Stack.Screen name='(auth)' options={{headerShown:false}}></Stack.Screen>
+        <Stack.Screen name='(auth)' ></Stack.Screen>
     </Stack>
       </QueryClientProvider>
     </ClerkProvider>

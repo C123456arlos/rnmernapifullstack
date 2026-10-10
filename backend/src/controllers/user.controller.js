@@ -15,7 +15,8 @@ export const updateProfile = asyncHandler(async (req, res) => {
     res.status(200).json({user})
 })
 export const syncUser = asyncHandler(async (req, res) => {
-    const { userId } = getAuth(req)
+    const { userId } = req.body
+    // const { userId } = getAuth(req)
     const existingUser = await User.findOne({ clerkId: userId })
     if (existingUser) {
         return res.status(200).json({user:existingUser,message:'user already exists'})

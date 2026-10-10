@@ -6,6 +6,7 @@ export const useUserSync = () => {
     const { isSignedIn } = useAuth()
     console.log('isSIgnedin', isSignedIn)
     const api = useApiClient()
+    console.log( 'api',api)
     const syncUserMutation = useMutation({
         mutationFn: () => userApi.syncUser(api),
         onSuccess: (response: any) => console.log('user synced successfully', response.data.user),

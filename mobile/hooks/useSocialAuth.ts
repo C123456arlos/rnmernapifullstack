@@ -1,8 +1,9 @@
 import { useSSO } from "@clerk/clerk-expo"
 import { useState } from "react"
 import { Alert } from "react-native"
-
+import { useRouter } from "expo-router"
 export const useSocialAuth = () => {
+    const router= useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const { startSSOFlow } = useSSO()
     const handleSocialAuth = async (strategy: 'oauth_google' | 'oauth_apple') => {
@@ -11,7 +12,8 @@ export const useSocialAuth = () => {
         try {
             const { createdSessionId, setActive } = await startSSOFlow({strategy} )
             if (createdSessionId && setActive) {
-            await setActive({session:createdSessionId})
+                await setActive({ session: createdSessionId })
+                router.replace('/')
             }
         } catch (error) {
             console.log('error in social auth', error)
@@ -23,3 +25,31 @@ export const useSocialAuth = () => {
     }
     return {isLoading, handleSocialAuth}
 }
+
+// import { useSSO } from "@clerk/clerk-expo"
+// import { useState } from "react"
+// import { Alert } from "react-native"
+// import { useRouter } from "expo-router"
+// export const useSocialAuth = () => {
+//     const router =useRouter()
+//     const [isLoading, setIsLoading] = useState(false)
+//     const { startSSOFlow } = useSSO()
+//     const handleSocialAuth = async (strategy: 'oauth_google' | 'oauth_apple') => {
+//     // const handleSocialAuth = async (strategy: 'oauth_google' | 'oauth_apple') => {
+//         setIsLoading(true)
+//         try {
+//             const { createdSessionId, setActive } = await startSSOFlow({strategy} )
+//             if (createdSessionId && setActive) {
+//             await setActive({session:createdSessionId})
+//         }
+//         // router.replace('/')
+//         } catch (error) {
+//             console.log('error in social auth', error)
+//             const provider = strategy === 'oauth_google' ? 'Google' : 'Apple'
+//             Alert.alert('error', `failed to sign n with${provider} please try again`)
+//         } finally {
+//             setIsLoading(false)
+//         }
+//     }
+//     return {isLoading, handleSocialAuth}
+// }

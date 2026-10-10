@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator, RefreshControl } from 'react-native'
 import React from 'react'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useNotifications } from '../../../hooks/useNotifications'
@@ -28,7 +28,8 @@ const NotificationsScreen = () => {
         </TouchableOpacity>
       </View>
       <ScrollView className='flex-1' contentContainerStyle={{ paddingBottom: 100 + insets.bottom }}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false} refreshControl={<RefreshControl
+        refreshing={isRefetching} onRefresh={refetch} tintColor={'#1da1f2'}></RefreshControl>}>
         {isLoading ? (
           <View className='flex-1 items-center justify-center p-8'>
             <ActivityIndicator size='large' color='#1da1f2'></ActivityIndicator>
@@ -36,7 +37,8 @@ const NotificationsScreen = () => {
         </View>
         ) : notifications.length === 0 ? (<NotificationsNotFound></NotificationsNotFound>) : (
           notifications.map(( notification: Notification )=>(
-            <NotificationCard key={notification._id}></NotificationCard>
+            <NotificationCard key={notification._id}
+              notification={notification} onDelete={deleteNotification}></NotificationCard>
             ))
         )}
      </ScrollView>

@@ -5,7 +5,7 @@ import { View } from "react-native"
 import { Text } from "react-native"
 import { useUserSync } from "../../../hooks/useUserSync"
 export default function AuthRoutesLayout() {
-    const { isSignedIn } = useAuth()
+    const { isSignedIn} = useAuth()
     // if (isSignedIn) {
     //     return <Redirect href='/(tabs)'></Redirect>
     // }    const { isSignedIn, isLoaded } = useAuth()

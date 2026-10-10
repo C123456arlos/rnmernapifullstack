@@ -14,7 +14,7 @@ const CommentsModal = ({ selectedPost, onClose }: CommentsModalProps) => {
         onClose()
         setCommentText('')
     }
-    console.log(selectedPost)
+    console.log( 'selectedpost',selectedPost)
   return (
     <Modal visible={!!selectedPost} animationType='slide' presentationStyle='pageSheet'>
           <View className='flex-row items-center justify-between px-4 py-3 border-b
@@ -50,7 +50,7 @@ const CommentsModal = ({ selectedPost, onClose }: CommentsModalProps) => {
                       <View key={comment._id} className='border-b border-gray-100 bg-white 
                       p-4'>
                           <View className='flex-row'>
-                              <Image source={{ uri: comment.user.profilePicture || '' }} className='w-10 h-10 rounded-full mr-3'></Image>
+                              <Image source={{ uri: comment.user?.profilePicture || '' }} className='w-10 h-10 rounded-full mr-3'></Image>
                               <View className='flex-1'>
                                   <View className='flex-row items-center mb-1'>
                                       <Text className='font-bold text-gray-900 mr-1'>

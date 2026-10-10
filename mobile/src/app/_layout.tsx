@@ -1,6 +1,7 @@
 import {ClerkProvider} from '@clerk/clerk-expo'
 import { Stack } from "expo-router"
 import { tokenCache } from '@clerk/clerk-expo/token-cache'
+import {StatusBar} from 'expo-status-bar'
 import '../../global.css'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 const queryClient= new QueryClient()
@@ -16,7 +17,9 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
       <Stack screenOptions={{headerShown:false}}>
         <Stack.Screen name='(auth)' ></Stack.Screen>
-    </Stack>
+        <Stack.Screen name='(tabs)' ></Stack.Screen>
+        </Stack>
+        <StatusBar style='dark'></StatusBar>
       </QueryClientProvider>
     </ClerkProvider>
 )}

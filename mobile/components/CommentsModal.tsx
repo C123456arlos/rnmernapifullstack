@@ -14,6 +14,7 @@ const CommentsModal = ({ selectedPost, onClose }: CommentsModalProps) => {
         onClose()
         setCommentText('')
     }
+    console.log(selectedPost)
   return (
     <Modal visible={!!selectedPost} animationType='slide' presentationStyle='pageSheet'>
           <View className='flex-row items-center justify-between px-4 py-3 border-b
@@ -28,7 +29,7 @@ const CommentsModal = ({ selectedPost, onClose }: CommentsModalProps) => {
               <ScrollView className='flex-1'>
                   <View className='border-b border-gray-100 bg-white p-4'>
                       <View className='flex-row'>
-                          <Image source={{ uri: selectedPost.user?.profilePicture }}
+                          <Image source={{ uri: selectedPost.user?.profilePicture || '' }}
                               className='w-12 h-12 rounded-full mr-3'></Image>
                           <View className='flex-1'>
                               <View className='flex-row items-center mb-1'>
@@ -68,7 +69,7 @@ const CommentsModal = ({ selectedPost, onClose }: CommentsModalProps) => {
                   ))}
                   <View className='p-4 border-t border-gray-100'>
                       <View className='flex-row'>
-                          <Image source={{ uri: currentUser?.profilePicture }}
+                          <Image source={{ uri: currentUser?.profilePicture  || ''}}
                               className='size-10 rounded-full mr-3'></Image>
                           <View className='flex-1'>
                               <TextInput className='border border-gray-200 rounded-lg p-3 text-base mb-3' placeholder='write a comment' value={commentText}

@@ -4,6 +4,7 @@ import { useAuth } from "@clerk/clerk-expo"
 import { useApiClient, userApi } from "../utils/api"
 export const useUserSync = () => {
     const { isSignedIn } = useAuth()
+    console.log('isSIgnedin', isSignedIn)
     const api = useApiClient()
     const syncUserMutation = useMutation({
         mutationFn: () => userApi.syncUser(api),

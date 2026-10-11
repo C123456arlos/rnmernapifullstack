@@ -1,14 +1,23 @@
-import { View, Text } from 'react-native'
+import { View, Text, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { Redirect, Tabs } from 'expo-router'
 import { Feather } from '@expo/vector-icons'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useAuth } from '@clerk/clerk-expo'
+import { useCurrentUser } from '../../../hooks/useCurrentUser'
 const TabsLayout = () => {
+  const { currentUser, isLoading } = useCurrentUser()
   const insets = useSafeAreaInsets()
   
     const { isSignedIn } = useAuth()
-    if(!isSignedIn) return <Redirect href={'/(auth)'}></Redirect>
+  if (!isSignedIn) return <Redirect href={'/(auth)'}></Redirect>
+    if (isLoading) {
+      return (
+        <View className='flex-1 bg-white items-center justify-center'>
+          <ActivityIndicator size="large" color={'#1d1af2'}></ActivityIndicator>
+        </View>
+      )
+    }
   return (
       <Tabs screenOptions={{
           tabBarActiveTintColor: '#1da1f2', tabBarInactiveTintColor: '#657786',

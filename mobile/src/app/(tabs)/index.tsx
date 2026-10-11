@@ -26,7 +26,8 @@ const HomeScreen = () => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false} className='flex-1'
         contentContainerStyle={{ paddingBottom: 80 }} refreshControl={<RefreshControl
-        refreshing={isRefetching} onRefresh={handlePullToRefresh} tintColor={'#1da1f2'}></RefreshControl>}>
+          refreshing={isRefetching} onRefresh={handlePullToRefresh} colors={['#1da1f2']}
+          tintColor={'#1da1f2'}></RefreshControl>}>
         <PostComposer></PostComposer>
         <PostsList></PostsList>
         </ScrollView>
